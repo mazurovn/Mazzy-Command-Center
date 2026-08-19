@@ -2,7 +2,7 @@
 
 [English](README.md) · [Русский](README.ru.md) · [Deutsch](README.de.md) · [中文](README.zh.md) · [日本語](README.ja.md) · **한국어**
 
-**[Pi](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) 코딩 에이전트를 위한, 부모가 증명하는 로컬 작업 지휘 센터.**
+**[Pi](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) 코딩 에이전트를 위한, 부모가 증명하는 로컬 에이전트 오케스트레이터 겸 지휘 센터.**
 
 _작성자: **Mazurov N.N.** — https://github.com/mazurovn · 독점, 소스 공개(서면 허가
 없이 수정·재배포 불가 — [LICENSE](LICENSE) 참조)._
@@ -137,12 +137,12 @@ Pi 세션에서 `/mazzy`를 실행해 상태와 대시보드 URL을 보거나, `
 ## 라이선스
 
 **[PolyForm Noncommercial License 1.0.0](LICENSE) 기반 소스 공개.**
-Copyright (c) 2026 Mazurov N.N.
+Copyright (c) 2025 Mazurov N.N.
 
 - ✅ 모든 **비상업적** 목적(개인 사용, 연구·과학, 교육)의 사용·연구·수정·공유는
   **무료**입니다.
 - ⛔ **상업적 사용 불가.** 기업 및 상업 제품/서비스는 별도의 상업 라이선스가
-  필요합니다. 상업용 **Mazzy Command Center Enterprise** 에디션을 제공합니다.
+  필요합니다. 상업용 **Mazzy Command Center Enterprise** 에디션과 상업 라이선스를 계획하고 있습니다.
 - ⛔ 모든 작성자/저작권/라이선스 고지를 유지해야 하며, 서면 허가 없이 소프트웨어
   이름 변경, 저작자 표시 제거, 동일 명칭(“Mazzy Command Center” / “Mazzy”)으로의
   수정본 제시가 불가합니다.

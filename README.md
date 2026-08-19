@@ -2,7 +2,7 @@
 
 **English** · [Русский](README.ru.md) · [Deutsch](README.de.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
 
-**A parent-attested, localhost task command center for the [Pi](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) coding agent.**
+**A parent-attested, localhost agent orchestrator and command center for the [Pi](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) coding agent.**
 
 _By **Mazurov N.N.** — https://github.com/mazurovn · Source-available under
 **PolyForm Noncommercial 1.0.0**: free for personal, research, and educational use;
@@ -55,8 +55,8 @@ surface into a remote-execution oracle:
   capability token, live SSE updates, a Kanban board, and a task discussion drawer.
 - **SDD/ADR knowledge graph** — an in-browser visualization that links specification
   clauses (ADR/INV/FR), code components, and backlog items into one filterable
-  connectivity graph, assembled from pluggable sources (memory & vectors plug in
-  as first-class sources).
+  connectivity graph, assembled from pluggable sources (memory & vectors plug
+  in as first-class sources — *direction*).
 - **Safe scaffolding** — `mazzy-init` writes portable project templates with a
   dry-run default, guarded `--force`, and `--rollback`.
 
@@ -255,13 +255,13 @@ See [`docs/`](docs/) for the conceptual architecture and specification summary.
 ## License
 
 **Source-available under the [PolyForm Noncommercial License 1.0.0](LICENSE).**
-Copyright (c) 2026 Mazurov N.N.
+Copyright (c) 2025 Mazurov N.N.
 
 - ✅ **Free** to use, study, modify, and share for any **noncommercial** purpose —
-  personal use, research and science, education, and evaluation.
+  personal use, research and science, and education.
 - ⛔ **No commercial use.** Companies and commercial products/services need a
-  separate commercial license. A **Mazzy Command Center Enterprise** edition is
-  offered commercially.
+  separate commercial license. A **Mazzy Command Center Enterprise** edition and
+  commercial licenses are planned / available on request.
 - ⛔ You must keep all author/copyright/license notices, and may **not** rename the
   software, remove attribution, or present modified versions under the same name
   ("Mazzy Command Center" / "Mazzy") without written permission.

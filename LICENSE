@@ -1,24 +1,24 @@
 Mazzy Command Center
-Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn)
+Copyright (c) 2025 Mazurov N.N. (https://github.com/mazurovn)
 
-Licensed under the PolyForm Noncommercial License 1.0.0 (below).
+Licensed under the PolyForm Noncommercial License 1.0.0 (full text below).
 
-SUMMARY (not a substitute for the terms below):
+PLAIN-LANGUAGE SUMMARY (informational; the terms below are what binds):
   - You MAY use, study, modify, and share this software for any NONCOMMERCIAL
-    purpose — personal use, research and science, education, and evaluation.
+    purpose — personal use, research and science, and education.
   - You MAY NOT use it for any COMMERCIAL purpose. Companies and commercial
     products/services require a separate commercial license from the author.
-    A separate Mazzy Command Center Enterprise edition is offered commercially.
-  - You MUST keep every copyright, author, and license notice intact, and must
-    reproduce the "Required Notice" lines below on every copy you distribute.
-  - "Mazzy Command Center" and "Mazzy" are the author's product names/marks.
-    You MAY NOT rename the software, remove attribution, or present modified
-    versions under the same name, and you MAY NOT use these names to endorse or
-    promote derived works, without the author's prior written permission.
+    A separate "Mazzy Command Center Enterprise" edition and commercial licenses
+    are planned / available on request.
+  - The "Required Notice" line below travels with every copy (this is the
+    PolyForm Notices mechanism, part of the license terms).
   - For commercial licensing or any use beyond these terms, contact the author:
     https://github.com/mazurovn
 
-Required Notice: Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn) —
+Trademark / naming: see the TRADEMARKS section at the end of this file. The
+PolyForm Noncommercial License grants no trademark rights.
+
+Required Notice: Copyright (c) 2025 Mazurov N.N. (https://github.com/mazurovn) —
 Mazzy Command Center — PolyForm Noncommercial License 1.0.0.
 
 --------------------------------------------------------------------------------
@@ -159,3 +159,26 @@ software under these terms.
 
 **Use** means anything you do with the software requiring one
 of your licenses.
+
+--------------------------------------------------------------------------------
+
+# TRADEMARKS
+
+The PolyForm Noncommercial License above grants copyright and patent rights only;
+it grants no rights in names, logos, or trademarks.
+
+"Mazzy Command Center" and "Mazzy" are the author's product names. Nothing in the
+copyright license lets you use them to name or promote your own or a modified
+version. Specifically:
+
+  - You may make and share modified versions for noncommercial purposes under the
+    copyright license, but you must NOT present a modified version as "Mazzy" or
+    "Mazzy Command Center", and must NOT use these names or the author's name to
+    endorse or promote your derivative, without prior written permission.
+  - If you redistribute a modified version, give it a different name and make
+    clear it is a modified, unofficial build.
+  - You must keep the copyright, author, and license notices intact on copies you
+    distribute (as the Notices term of the license requires).
+
+These naming rules are trademark/attribution terms and are independent of the
+copyright license; they do not add restrictions to the PolyForm copyright grant.

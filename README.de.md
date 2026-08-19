@@ -2,7 +2,7 @@
 
 [English](README.md) · [Русский](README.ru.md) · **Deutsch** · [中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
 
-**Eine elternattestierte, lokale Task-Kommandozentrale für den [Pi](https://www.npmjs.com/package/@earendil-works/pi-coding-agent)-Coding-Agent.**
+**Ein elternattestierter, lokaler Agenten-Orchestrator und Kommandozentrale für den [Pi](https://www.npmjs.com/package/@earendil-works/pi-coding-agent)-Coding-Agent.**
 
 _Von **Mazurov N.N.** — https://github.com/mazurovn · Proprietär, quelloffen
 einsehbar (keine Änderung oder Weiterverbreitung ohne schriftliche Genehmigung —
@@ -177,13 +177,13 @@ Bitte melde Sicherheitsbedenken über einen privaten Kanal, nicht über ein
 ## Lizenz
 
 **Quelloffen einsehbar unter der [PolyForm Noncommercial License 1.0.0](LICENSE).**
-Copyright (c) 2026 Mazurov N.N.
+Copyright (c) 2025 Mazurov N.N.
 
 - ✅ **Frei** zu nutzen, studieren, ändern und teilen für jeden **nichtkommerziellen**
   Zweck — private Nutzung, Forschung und Wissenschaft, Bildung.
 - ⛔ **Keine kommerzielle Nutzung.** Unternehmen und kommerzielle Produkte/Dienste
-  brauchen eine separate kommerzielle Lizenz. Eine **Mazzy Command Center
-  Enterprise**-Edition wird kommerziell angeboten.
+  brauchen eine separate kommerzielle Lizenz. Eine **Mazzy Command Center Enterprise**-Edition und kommerzielle Lizenzen sind
+  geplant / auf Anfrage verfügbar.
 - ⛔ Alle Autoren-/Copyright-/Lizenzhinweise müssen erhalten bleiben; die Software
   darf ohne schriftliche Genehmigung nicht umbenannt, die Attribution nicht entfernt
   und geänderte Versionen nicht unter demselben Namen präsentiert werden.

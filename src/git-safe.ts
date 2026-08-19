@@ -1,5 +1,5 @@
 // Mazzy Command Center
-// Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn)
+// Copyright (c) 2025 Mazurov N.N. (https://github.com/mazurovn)
 // PolyForm Noncommercial 1.0.0 — free for noncommercial use (personal, research,
 // education). Commercial use requires a separate license. See LICENSE.
 

@@ -1,7 +1,7 @@
 {
   "name": "@mazurovn/mazzy-command-center",
-  "version": "0.2.2",
-  "description": "Mazzy Command Center — a full agent orchestrator and command center for the Pi coding agent: task tracker, own sub-agent engine, sub-agent creator, meta-agents, tiered memory, and a spec<->code<->backlog graph.",
+  "version": "0.2.3",
+  "description": "Mazzy Command Center — a full agent orchestrator and command center for the Pi coding agent: durable task tracker, attested orchestration, and a spec<->code<->backlog graph today; its own sub-agent engine, sub-agent creator, meta-agents, and tiered memory (DAG/RAG/vectors) in progress.",
   "type": "module",
   "keywords": [
     "pi-package",
@@ -59,7 +59,7 @@
   "engines": {
     "node": ">=22.19.0"
   },
-  "license": "PolyForm-Noncommercial-1.0.0",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
     "url": "https://github.com/mazurovn/Mazzy-Command-Center.git"

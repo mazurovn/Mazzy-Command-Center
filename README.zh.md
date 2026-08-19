@@ -2,7 +2,7 @@
 
 [English](README.md) · [Русский](README.ru.md) · [Deutsch](README.de.md) · **中文** · [日本語](README.ja.md) · [한국어](README.ko.md)
 
-**面向 [Pi](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) 编码代理的、由父级签证的本地任务指挥中心。**
+**面向 [Pi](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) 编码代理的、由父级签证的本地智能体编排器与指挥中心。**
 
 _作者：**Mazurov N.N.** — https://github.com/mazurovn · 专有、源码可见（未经书面许可
 不得修改或再分发 — 见 [LICENSE](LICENSE)）。_
@@ -151,11 +151,10 @@ URL（令牌从不写入日志）。
 ## 许可证
 
 **依据 [PolyForm Noncommercial License 1.0.0](LICENSE) 开放源代码。**
-版权所有 (c) 2026 Mazurov N.N.
+版权所有 (c) 2025 Mazurov N.N.
 
 - ✅ 可**免费**用于任何**非商业**目的的使用、研究、修改和分享 —— 个人使用、科研、教育。
-- ⛔ **不得商业使用。** 公司及商业产品/服务需要单独的商业许可。另有商业版
-  **Mazzy Command Center Enterprise**。
+- ⛔ **不得商业使用。** 公司及商业产品/服务需要单独的商业许可。另计划提供商业版 **Mazzy Command Center Enterprise** 及商业许可。
 - ⛔ 必须保留所有作者/版权/许可声明；未经书面许可，不得重命名软件、移除署名，或以
   相同名称（“Mazzy Command Center” / “Mazzy”）呈现修改版本。
 

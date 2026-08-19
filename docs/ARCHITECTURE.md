@@ -18,9 +18,9 @@ secure. It is not an implementation reference.
 Mazzy Command Center is a project-local Pi extension that acts as a **command
 center owning orchestration**: it decides *what runs next, with which agent, under
 which budget and capability ceiling*, and it holds the durable plan, evidence,
-memory, and knowledge graph. Execution is performed by an engine Mazzy controls —
-today through a replaceable provider, growing into a first-party engine — always
-behind a strict process boundary.
+memory, and knowledge graph. Execution runs through a provider interface Mazzy
+owns — today the `pi-subagents` provider, growing into a first-party engine —
+always behind a strict process boundary.
 
 | Mazzy owns | Notes |
 |---|---|
