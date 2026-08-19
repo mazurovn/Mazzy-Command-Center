@@ -1,7 +1,7 @@
 // Mazzy Command Center
 // Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn)
-// Proprietary source-available license — no modification or redistribution
-// without prior written permission. See LICENSE.
+// PolyForm Noncommercial 1.0.0 — free for noncommercial use (personal, research,
+// education). Commercial use requires a separate license. See LICENSE.
 
 import { createHash } from "node:crypto";
 import { closeSync, constants, existsSync, lstatSync, mkdirSync, openSync, readdirSync, readFileSync, realpathSync, renameSync, unlinkSync, writeSync } from "node:fs";

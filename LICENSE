@@ -1,52 +1,161 @@
-Mazzy Command Center — Proprietary Source-Available License
+Mazzy Command Center
 Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn)
-All rights reserved.
 
-This software and its associated documentation (the "Software") are the
-exclusive property of Mazurov N.N. ("the Author"). The Software is made
-source-available for transparency, evaluation, and personal use only, under the
-following terms.
+Licensed under the PolyForm Noncommercial License 1.0.0 (below).
 
-1. GRANT OF USE.
-   Subject to full compliance with this License, the Author grants you a
-   personal, non-exclusive, non-transferable, revocable license to view, run,
-   and use the Software for personal and evaluation purposes only.
+SUMMARY (not a substitute for the terms below):
+  - You MAY use, study, modify, and share this software for any NONCOMMERCIAL
+    purpose — personal use, research and science, education, and evaluation.
+  - You MAY NOT use it for any COMMERCIAL purpose. Companies and commercial
+    products/services require a separate commercial license from the author.
+    A separate Mazzy Command Center Enterprise edition is offered commercially.
+  - You MUST keep every copyright, author, and license notice intact, and must
+    reproduce the "Required Notice" lines below on every copy you distribute.
+  - "Mazzy Command Center" and "Mazzy" are the author's product names/marks.
+    You MAY NOT rename the software, remove attribution, or present modified
+    versions under the same name, and you MAY NOT use these names to endorse or
+    promote derived works, without the author's prior written permission.
+  - For commercial licensing or any use beyond these terms, contact the author:
+    https://github.com/mazurovn
 
-2. NO MODIFICATION.
-   You may NOT modify, adapt, translate, reverse-engineer beyond what is
-   necessary for permitted use, or create derivative works of the Software, in
-   whole or in part, without the prior WRITTEN permission of the Author.
+Required Notice: Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn) —
+Mazzy Command Center — PolyForm Noncommercial License 1.0.0.
 
-3. NO REDISTRIBUTION.
-   You may NOT copy (except as strictly required to run the Software),
-   distribute, publish, sublicense, sell, rent, lease, host as a service, or
-   otherwise transfer the Software, whether modified or unmodified, without the
-   prior WRITTEN permission of the Author.
+--------------------------------------------------------------------------------
 
-4. ATTRIBUTION AND NOTICES.
-   You may NOT remove, obscure, or alter any copyright, author, or license
-   notice in the Software. Every permitted copy must retain, verbatim, the
-   author attribution: "Mazurov N.N. (https://github.com/mazurovn)".
+# PolyForm Noncommercial License 1.0.0
 
-5. RESERVATION OF RIGHTS.
-   All rights not expressly granted herein are reserved by the Author. No
-   ownership or intellectual-property rights are transferred to you.
+<https://polyformproject.org/licenses/noncommercial/1.0.0>
 
-6. TERMINATION.
-   This License terminates automatically upon any breach. Upon termination you
-   must cease all use and destroy all copies in your possession.
+## Acceptance
 
-7. NO WARRANTY.
-   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-   FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+In order to get any license under these terms, you must agree
+to them as both strict obligations and conditions to all
+your licenses.
 
-8. LIMITATION OF LIABILITY.
-   IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER
-   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING
-   FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-   IN THE SOFTWARE.
+## Copyright License
 
-For permissions beyond the scope of this License — including modification,
-redistribution, or commercial use — contact the Author at
-https://github.com/mazurovn.
+The licensor grants you a copyright license for the
+software to do everything you might do with the software
+that would otherwise infringe the licensor's copyright
+in it for any permitted purpose.  However, you may
+only distribute the software according to [Distribution
+License](#distribution-license) and make changes or new works
+based on the software according to [Changes and New Works
+License](#changes-and-new-works-license).
+
+## Distribution License
+
+The licensor grants you an additional copyright license
+to distribute copies of the software.  Your license
+to distribute covers distributing the software with
+changes and new works permitted by [Changes and New Works
+License](#changes-and-new-works-license).
+
+## Notices
+
+You must ensure that anyone who gets a copy of any part of
+the software from you also gets a copy of these terms or the
+URL for them above, as well as copies of any plain-text lines
+beginning with `Required Notice:` that the licensor provided
+with the software.  For example, if the licensor provided
+the following notice:
+
+    Required Notice: Copyright Yoyodyne, Inc. (http://example.com)
+
+You must ensure that this notice, and any URL it includes,
+appears prominently on every copy of the software you make
+and distribute.
+
+## Changes and New Works License
+
+The licensor grants you an additional copyright license to
+make changes and new works based on the software for any
+permitted purpose.
+
+## Patent License
+
+The licensor grants you a patent license for the software that
+covers patent claims the licensor can license, or becomes able
+to license, that you would infringe by using the software.
+
+## Noncommercial Purposes
+
+Any noncommercial purpose is a permitted purpose.
+
+## Personal Uses
+
+Personal use for research, experiment, and testing for
+the benefit of public knowledge, personal study, private
+entertainment, hobby projects, amateur pursuits, or religious
+observance, without any anticipated commercial application,
+is use for a permitted purpose.
+
+## Noncommercial Organizations
+
+Use by any charitable organization, educational institution,
+public research organization, public safety or health
+organization, environmental protection organization,
+or government institution is use for a permitted purpose
+regardless of the source of funding or obligations resulting
+from the funding.
+
+## Fair Use
+
+You may have "fair use" rights for the software under the
+law. These terms do not limit them.
+
+## No Other Rights
+
+These terms do not allow you to sublicense or transfer any of
+your licenses to anyone else, or prevent the licensor from
+granting licenses to anyone else.  These terms do not imply
+any other licenses.
+
+## Patent Defense
+
+If you make any written claim that the software infringes or
+contributes to infringement of any patent, your patent license
+for the software granted under these terms ends immediately. If
+your company makes such a claim, your patent license ends
+immediately for work on behalf of your company.
+
+## Violations
+
+The first time you are notified in writing that you have
+violated any of these terms, or done anything with the software
+not covered by your licenses, your licenses can nonetheless
+continue if you come into full compliance with these terms,
+and take practical steps to correct past violations, within
+32 days of receiving notice.  Otherwise, all your licenses
+end immediately.
+
+## No Liability
+
+***As far as the law allows, the software comes as is, without
+any warranty or condition, and the licensor will not be liable
+to you for any damages arising out of these terms or the use
+or nature of the software, under any kind of legal claim.***
+
+## Definitions
+
+The **licensor** is the individual or entity offering these
+terms, and the **software** is the software the licensor makes
+available under these terms.
+
+**You** refers to the individual or entity agreeing to these
+terms.
+
+**Your company** is any legal entity, sole proprietorship,
+or other kind of organization that you work for, plus all
+organizations that have control over, are under the control of,
+or are under common control with that organization.  **Control**
+means ownership of substantially all the assets of an entity,
+or the power to direct its management and policies by vote,
+contract, or otherwise.  Control can be direct or indirect.
+
+**Your licenses** are all the licenses granted to you for the
+software under these terms.
+
+**Use** means anything you do with the software requiring one
+of your licenses.

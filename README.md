@@ -4,39 +4,59 @@
 
 **A parent-attested, localhost task command center for the [Pi](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) coding agent.**
 
-_By **Mazurov N.N.** — https://github.com/mazurovn · Proprietary, source-available
-(no modification or redistribution without written permission — see [LICENSE](LICENSE))._
+_By **Mazurov N.N.** — https://github.com/mazurovn · Source-available under
+**PolyForm Noncommercial 1.0.0**: free for personal, research, and educational use;
+commercial use requires a separate license (see [LICENSE](LICENSE))._
 
-Mazzy Command Center is a project-local Pi extension that turns a Pi session into
-a durable, auditable command center for agent-driven work: a task tracker, an
-orchestration decision surface, a review/evidence ledger, and an authenticated
-local web dashboard — all over a single embedded SQLite control plane.
+Mazzy Command Center is a **full agent orchestrator and command center** built as a
+project-local Pi extension. It turns a Pi session into a durable, auditable center
+from which agent work is planned, delegated, executed, reviewed, and remembered — a
+task tracker + orchestrator + its own sub-agent engine + a sub-agent creator +
+meta-agents + tiered memory + a spec↔code↔backlog knowledge graph, all over one
+embedded SQLite kernel.
 
-> **Status: authenticated local pilot.** One machine, one trusted user,
-> project-local persistence, and process-level parent/child boundaries. It is not
-> (yet) a multi-user, multi-tenant, or remote-deployment product. See
-> [Security & limits](#security--limits).
+> **Status: authenticated local pilot, actively building toward the full command
+> center.** The pilot ships the durable kernel, the dashboard, the graph view, and
+> parent-attested orchestration today. The own sub-agent engine, sub-agent creator,
+> meta-agents, and tiered memory / DAG / RAG / vectors are the product direction and
+> are landing incrementally. See [Roadmap](#roadmap) and [Security & limits](#security--limits).
 
 ---
 
-## What it does
+## What it is
 
-Mazzy is a **control plane**, not a second execution runtime. It records and
-governs work; the actual child execution is delegated to `pi-subagents`. The
-parent Pi session is the only writer to the control plane — child agents never
-mutate durable state directly; the parent attests observed results.
+Mazzy is a **command center that owns orchestration**: it decides *what runs next,
+with which agent, under which budget and capability ceiling*, and it keeps the
+durable plan, evidence, memory, and knowledge graph. It is designed around a clean
+**three-authority split** so that owning a powerful engine never turns the web
+surface into a remote-execution oracle:
+
+1. **Scheduling** (the kernel) — a pure planner computes what should run next from
+   durable, typed records.
+2. **Dispatch** (Mazzy's own executor) — a separate, network-less, parent-lifetime
+   process is the only thing that actually launches work.
+3. **Execution provider** — a replaceable runtime behind that executor (today
+   `pi-subagents`; Mazzy owns the provider interface and is growing its own engine).
 
 - **Durable task tracker** — epics / features / tasks / bugs with a revisioned
   lifecycle (`DRAFT → BACKLOG → READY → CLAIMED → RUNNING → REVIEW → DONE`, plus
   `BLOCKED / FAILED / CANCELLED`). Every update is optimistic-concurrency checked.
-- **Parent-attested orchestration** — the parent binds an *observed* child run to
-  a task before claiming it is running; `DONE` requires independent PASS evidence,
-  never a comment.
+- **Orchestrator with attested dispatch** — Mazzy plans and dispatches work, binds
+  the *observed* run to its task, and gates `DONE` on independent PASS evidence.
+- **Own sub-agent engine & creator** *(direction)* — a first-party execution engine
+  and a declarative sub-agent creator: define agents, capability ceilings, budgets,
+  and prompt contracts, and spawn them through Mazzy's own executor.
+- **Meta-agents** *(direction)* — agents whose output is *proposals* other agents
+  act on, all under the same attested, capability-ceilinged dispatch path.
+- **Tiered memory + knowledge** *(direction)* — hot / warm / cold memory with
+  hybrid retrieval (RAG) and vector search, plus a plan DAG — as context, never as
+  authority.
 - **Authenticated local dashboard** — a self-contained web UI on `localhost` with a
   capability token, live SSE updates, a Kanban board, and a task discussion drawer.
-- **SDD/ADR graph view** — an in-browser visualization that links specification
+- **SDD/ADR knowledge graph** — an in-browser visualization that links specification
   clauses (ADR/INV/FR), code components, and backlog items into one filterable
-  connectivity graph, assembled from pluggable sources.
+  connectivity graph, assembled from pluggable sources (memory & vectors plug in
+  as first-class sources).
 - **Safe scaffolding** — `mazzy-init` writes portable project templates with a
   dry-run default, guarded `--force`, and `--rollback`.
 
@@ -44,23 +64,31 @@ mutate durable state directly; the parent attests observed results.
 
 ## Architecture at a glance
 
+Mazzy owns orchestration through a **three-authority split** so a powerful engine
+never turns the web surface into a remote-execution oracle:
+
 ```
-Human ── Pi commands / authenticated localhost browser ──┐
-                                                          v
-Pi parent + extension APIs ── Mazzy Command Center ── SQLite control plane
-                             │       │        │
-                             │       ├─ discussion / evidence / reports
-                             │       └─ parent-attested control bridge
-                             v
-                   pi-subagents (the only child execution runtime)
+Human / planner ── Pi commands / authenticated localhost browser ──┐
+                                                                    v
+Mazzy Command Center kernel (orchestration authority) ── SQLite kernel store
+   • plan / evidence / memory & knowledge (direction)  │
+   • issues single-use, integrity-checked dispatch      │
+                                                        v
+                        Mazzy executor  (separate, network-less process)
+                                                        │
+                                                        v
+                        execution provider — pi-subagents today,
+                        Mazzy's own engine (direction) — replaceable
 ```
 
 **Core principles (invariants):**
 
-- **Single execution runtime** — `pi-subagents` runs children; Mazzy never spawns,
-  schedules, retries, or kills child work. It owns *decision* authority, not
-  *execution* authority.
-- **Parent-only writes** — control-plane mutations require the interactive parent;
+- **No HTTP-caused execution** — no process that terminates an HTTP socket holds
+  dispatch authority; only the separate executor launches work, and only against a
+  single-use authorization.
+- **No free text drives execution** — scheduling is a pure function of typed durable
+  records; memory, vectors, and cache are *context, never authority*.
+- **Parent-only writes** — kernel mutations require the interactive parent;
   inherited child processes are refused.
 - **No host paths cross the API** — only opaque ids, enums, and relative refs leave
   the localhost HTTP boundary.
@@ -80,7 +108,7 @@ A deeper conceptual overview lives in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE
 | Tool | Purpose |
 |---|---|
 | `mazzy_task` | Create / list / get / update durable tasks (revisioned; `DONE` needs PASS evidence). |
-| `mazzy_route` | Read-only policy preflight for delegation (never spawns). |
+| `mazzy_route` | Read-only policy preflight for delegation (planning only; the executor dispatches). |
 | `mazzy_assignment` | Parent-attested run binding, completion import, and reviewer evidence. |
 | `mazzy_discussion` | Read/answer a durable task discussion. |
 | `mazzy_control` | Claim/complete/fail dashboard GO / PAUSE / STOP requests. |
@@ -168,6 +196,26 @@ without it and never embeds the token in the served HTML.
 
 ---
 
+## Roadmap
+
+Mazzy Command Center is being built into a full agent orchestrator. Shipped today:
+the durable kernel, the task tracker, the authenticated dashboard, the SDD/ADR graph
+view, and parent-attested orchestration. The product direction, landing
+incrementally behind the three-authority model:
+
+- **Own sub-agent engine** — a first-party execution engine behind Mazzy's own
+  network-less executor (the provider interface exists today; `pi-subagents` is the
+  first provider).
+- **Sub-agent creator** — declaratively define agents, capability ceilings, budgets,
+  and prompt contracts, then dispatch them through Mazzy.
+- **Meta-agents** — agents whose output is proposals other agents act on, under the
+  same attested, capability-ceilinged dispatch path.
+- **Tiered memory + RAG + vectors** — hot / warm / cold memory and hybrid retrieval
+  as first-class graph/retrieval sources (as context, never authority).
+- **Plan DAG** — durable, declarative plan graphs the pure planner reads from.
+
+---
+
 ## Security & limits
 
 This is an **authenticated local pilot**, and the README should not be read as a
@@ -206,9 +254,17 @@ See [`docs/`](docs/) for the conceptual architecture and specification summary.
 
 ## License
 
-**Proprietary, source-available.** Copyright (c) 2026 Mazurov N.N. All rights
-reserved. You may view, run, and evaluate the Software, but you may **not** modify,
-adapt, redistribute, or create derivative works without the Author's prior written
-permission, and every permitted copy must retain the author attribution. See the
-[LICENSE](LICENSE) file for the full terms. For any use beyond evaluation — including
-modification or redistribution — contact the Author at https://github.com/mazurovn.
+**Source-available under the [PolyForm Noncommercial License 1.0.0](LICENSE).**
+Copyright (c) 2026 Mazurov N.N.
+
+- ✅ **Free** to use, study, modify, and share for any **noncommercial** purpose —
+  personal use, research and science, education, and evaluation.
+- ⛔ **No commercial use.** Companies and commercial products/services need a
+  separate commercial license. A **Mazzy Command Center Enterprise** edition is
+  offered commercially.
+- ⛔ You must keep all author/copyright/license notices, and may **not** rename the
+  software, remove attribution, or present modified versions under the same name
+  ("Mazzy Command Center" / "Mazzy") without written permission.
+
+For a commercial license or any use beyond these terms, contact the author:
+https://github.com/mazurovn

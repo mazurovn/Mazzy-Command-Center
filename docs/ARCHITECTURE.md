@@ -1,112 +1,136 @@
 # Mazzy Command Center — Conceptual Architecture
 
-_By Mazurov N.N. — https://github.com/mazurovn · Proprietary, source-available._
+_By Mazurov N.N. — https://github.com/mazurovn · PolyForm Noncommercial 1.0.0 (noncommercial use only; commercial license required)._
 
-This document is a **conceptual overview** of Mazzy Command Center: what it owns,
-what it deliberately does not own, and the invariants that keep it safe. It is not
-an implementation reference.
+This document is a **conceptual overview** of Mazzy Command Center: a full agent
+orchestrator and command center. It explains what Mazzy owns, the three-authority
+model that lets it own a powerful engine safely, and the invariants that keep it
+secure. It is not an implementation reference.
 
-> **Status — authenticated local pilot.** Everything below describes the shipped
-> single-machine, single-trusted-user pilot. Multi-user, multi-tenant, and remote
-> deployment are out of scope for this release.
+> **Status — authenticated local pilot, building toward the full command center.**
+> The pilot ships the durable kernel, dashboard, graph view, and attested
+> orchestration today. The own sub-agent engine, sub-agent creator, meta-agents,
+> and tiered memory / DAG / RAG / vectors are the product direction and land
+> incrementally. Sections marked *(direction)* are design intent, not yet shipped.
 
-## 1. Product boundary
+## 1. What Mazzy is
 
-Mazzy Command Center is a project-local Pi extension. It owns the **control-panel
-layer** over reused Pi capabilities and delegates all child execution to
-`pi-subagents`.
+Mazzy Command Center is a project-local Pi extension that acts as a **command
+center owning orchestration**: it decides *what runs next, with which agent, under
+which budget and capability ceiling*, and it holds the durable plan, evidence,
+memory, and knowledge graph. Execution is performed by an engine Mazzy controls —
+today through a replaceable provider, growing into a first-party engine — always
+behind a strict process boundary.
 
-| Boundary | Mazzy owns | Mazzy reuses / does not own |
-|---|---|---|
-| Decision & evidence | tasks, assignments, review reports, evidence, revisions, control requests | Pi session identity, child execution identity |
-| Discussion | durable task comments, threading, parent import path, UI narration | optional session-messaging transport |
-| Web UI | dashboard, status/menu, token handling, graph view | Pi TUI / extension host / public APIs |
-| Scaffold | portable templates, init/doctor/rollback, routing policy | the consuming project's Git root and Pi config |
-| Control bridge | parent-attested GO / PAUSE / STOP requests and run bindings | `pi-subagents` lifecycle & controls |
-| Execution | **nothing** — no scheduler, worker, poller, daemon, or child lifecycle | `pi-subagents`, the sole execution runtime |
+| Mazzy owns | Notes |
+|---|---|
+| **Orchestration authority** | the plan, scheduling decisions, agent selection, budgets, capability ceilings |
+| **Task tracker & evidence** | tasks, revisions, assignments/run bindings, review reports, evidence |
+| **Sub-agent engine & creator** *(direction)* | a first-party execution engine and a declarative agent creator |
+| **Meta-agents** *(direction)* | agents whose output is proposals other agents act on |
+| **Memory & knowledge** *(direction)* | hot / warm / cold memory, RAG, vectors, and a plan DAG (as context, never authority) |
+| **Web command surface** | dashboard, status/menu, token handling, the spec↔code↔backlog graph |
+| **Scaffold** | portable templates, init/doctor/rollback, routing policy |
 
-## 2. Component view
+## 2. The three-authority model (why owning an engine is safe)
+
+Owning a powerful orchestration engine must never turn the web surface into a
+remote-execution oracle. Mazzy therefore separates three distinct authorities:
+
+1. **Scheduling authority — the kernel.** A pure planner computes *what should run
+   next* from durable, typed records (no free text as an authorization input). It
+   holds no process handles and starts nothing.
+2. **Dispatch authority — Mazzy's own executor.** A separate, **network-less,
+   parent-lifetime** process is the only component that actually launches work. It
+   consumes single-use, integrity-checked dispatch authorizations; no process that
+   terminates the HTTP socket can start work.
+3. **Execution provider — replaceable.** Behind the executor sits a provider that
+   runs the agent. Today this is `pi-subagents`; Mazzy owns the provider interface
+   and is growing its own first-party engine. Swapping the provider changes nothing
+   above it.
+
+This split is what lets Mazzy be a full orchestrator *and* keep a hard structural
+distance between the network surface and process creation.
+
+## 3. Component view
 
 ```
 Human operator ── Pi commands / authenticated localhost browser ──┐
                                                                    v
-Pi parent + extension APIs ── Mazzy Command Center ── SQLite control plane
-                             │        │        │
-                             │        ├─ discussion   ├─ evidence / reports
-                             │        └─ control bridge
-                             v
-                    pi-subagents (only child runtime)
-                             │
-                    bound worker / reviewer runs
+Pi parent + extension APIs ── Mazzy Command Center kernel ── SQLite kernel store
+   (orchestration authority)  │        │        │
+                              │        ├─ plan / evidence / reports
+                              │        ├─ memory & knowledge graph  (direction)
+                              │        └─ dispatch authorizations
+                                        │  (single-use, integrity-checked)
+                                        v
+                          Mazzy executor  (separate, network-less process)
+                                        │
+                                        v
+                          execution provider — pi-subagents today,
+                          Mazzy's own engine (direction) — replaceable
 ```
 
-The parent owns tool writes and imports child results. A child may produce a
-result, but it never writes the control plane directly.
+## 4. Plan → dispatch → review
 
-## 3. Request → run → review
+1. A human or the dashboard creates/updates work, or the planner proposes the next
+   step from the durable plan.
+2. Mazzy selects the agent, budget, and capability ceiling, and issues a single-use
+   dispatch authorization.
+3. The **executor** (not the web process) launches the run through the provider,
+   observes the real run/session id, and binds it to the task.
+4. The bound agent performs the work and returns a concise, safe result.
+5. A bound reviewer independently checks it and supplies verifier evidence/report —
+   the authoritative PASS/FAIL channel.
+6. Completion requires the applicable reviewer PASS evidence; comments never satisfy
+   a gate.
 
-1. A human or the dashboard creates/updates a task and may submit a control request.
-2. The authenticated parent reads and claims the request; comments alone authorize
-   nothing.
-3. For **GO**, the parent evaluates policy, invokes `pi-subagents`, observes the real
-   run/session id, and records the matching binding. Mazzy never spawns a runtime.
-4. A bound worker performs the work through `pi-subagents` and ends with a concise,
-   safe `TASK_COMMENT`.
-5. The parent imports meaningful child narration through the attested assignment path.
-6. A bound reviewer independently checks the result and supplies verifier
-   evidence/report — the authoritative PASS/FAIL channel.
-7. Completion requires the applicable reviewer PASS evidence; the operator makes any
-   remaining human decision.
+**PAUSE / STOP** act on the observed run through the provider's control surface and
+record only the observed outcome. A dispatched acknowledgement is never a claim that
+work completed.
 
-**PAUSE / STOP** are explicit requests: the parent uses the `pi-subagents` control on
-the observed target and records only the observed outcome. A dispatched
-acknowledgement is never a claim that work completed.
+## 5. Invariants
 
-## 4. Invariants
+Enforced by structure and tests, not merely convention.
 
-These are enforced by structure and tests, not merely convention.
-
-- **INV — Single execution runtime.** `pi-subagents` is the only execution runtime.
-  Mazzy never spawns, polls, schedules, retries, or kills child work. The only timer
-  is the dashboard's SSE keep-alive; session-start recovery is a one-shot, not a loop.
-- **INV — Control-plane store stays identity-free.** The store and HTTP server never
-  resolve or hold project identity; identity resolution lives only in the composition
-  root. The server receives an already-redacted context blob.
-- **INV — No host path crosses the HTTP boundary.** Only opaque ids, source/status
-  enums, and bounded transport-observable values (short session prefix, bound port)
-  leave `localhost`. Absolute host paths never enter or leave the API — including a
-  fail-closed gate on the graph endpoint.
-- **INV — Comments are supplementary, never evidence.** Reviewer comments narrate;
-  verifier evidence/report is authoritative for PASS/FAIL.
+- **INV — No HTTP-caused execution.** No process that terminates an HTTP socket
+  holds dispatch authority, and no HTTP-reachable verb can start work. Dispatch
+  happens only in the executor, only against a valid single-use authorization.
+- **INV — No free text drives execution.** Scheduling is a pure function of typed
+  durable records; no `argv`/`env`/`cwd` byte is derived from task/comment/report
+  text. Memory, vectors, and cache are *context, never authority*.
+- **INV — Kernel store stays identity-free.** The store and HTTP server never
+  resolve or hold project identity; identity lives only in the composition root.
+- **INV — No host path crosses the HTTP boundary.** Only opaque ids, enums, and
+  bounded transport values leave `localhost` — including a fail-closed gate on the
+  graph endpoint.
+- **INV — Comments are supplementary, never evidence.** Verifier evidence/report is
+  authoritative for PASS/FAIL.
 - **INV — Hardened process invocation.** Every `git` call is routed through a single
-  wrapper that neutralizes repository-supplied config/hooks and inherited environment,
-  requires `--` before pathspecs, and rejects option-injection — so an untrusted
-  working tree cannot influence execution.
+  wrapper that neutralizes repository-supplied config/hooks and inherited
+  environment, requires `--` before pathspecs, and rejects option-injection.
 
-## 5. The graph view (SDD/ADR tab)
+## 6. Memory, knowledge, and the graph *(direction + shipped view)*
 
-The dashboard renders a connectivity graph linking **specification** (ADR/INV/FR),
-**code** (files/symbols), and **backlog** (epics/features/tasks). The graph is
-assembled server-side from a registry of pluggable sources; a missing source
-degrades to a greyed legend chip rather than an error. A fail-closed gate strips and
-rejects any host path before the document leaves the API. Rendering is a vendored,
-CSP-safe SVG renderer with no external dependency; all filtering is client-side and
-derived from the payload, so new sources appear as new lanes and toggles without any
-client change.
+Mazzy's knowledge layer links **specification** (ADR/INV/FR), **code**
+(files/symbols), and **backlog** (epics/features/tasks) into one filterable
+connectivity graph, assembled server-side from a registry of pluggable sources. The
+**SDD/ADR graph view ships today**; **tiered memory (hot/warm/cold), RAG, and vector
+search** are first-class sources that plug into the same graph and retrieval path as
+they land — always as *context*, never as an authorization input (see INV above). A
+missing source degrades to a greyed legend chip. Rendering is a vendored, CSP-safe
+SVG renderer with no external dependency.
 
-## 6. Persistence
+## 7. Persistence
 
-Durable data — tasks, revisions, assignments/run bindings, comments, evidence,
-review reports, and control-request state — lives in a project-local SQLite control
-plane. The package ships code, the web UI, skills, and portable templates. It is a
-reusable package; live state is not yet a specified export/import, encrypted-backup,
-or cross-host replication system.
+Durable data — plan, tasks, revisions, run bindings, comments, evidence, review
+reports, control state, and (direction) memory/knowledge — lives in a project-local
+SQLite kernel. The package ships code, the web UI, skills, and portable templates.
 
-## 7. What this pilot is not
+## 8. Pilot limits (honest scope)
 
-- Not multi-user authorization or tenant isolation.
-- Not remote identity attestation or a distributed sole-writer lease.
-- Not encrypted/portable durable storage or a production migration/recovery system.
-
-A dashboard action, a dispatched control request, or a parent acknowledgement is not
-proof of execution or verification.
+The pilot is a single-machine, single-trusted-user deployment. It is **not** yet
+multi-user authorization, tenant isolation, remote identity attestation, a
+distributed sole-writer lease, or encrypted/portable backup and recovery. A
+dashboard action, a dispatched control request, or an acknowledgement is not proof
+of execution or verification.

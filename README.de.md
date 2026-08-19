@@ -8,40 +8,58 @@ _Von **Mazurov N.N.** — https://github.com/mazurovn · Proprietär, quelloffen
 einsehbar (keine Änderung oder Weiterverbreitung ohne schriftliche Genehmigung —
 siehe [LICENSE](LICENSE))._
 
-Mazzy Command Center ist eine projektlokale Pi-Erweiterung, die eine Pi-Sitzung in
-eine dauerhafte, überprüfbare Kommandozentrale für agentengesteuerte Arbeit
-verwandelt: ein Task-Tracker, eine Entscheidungsoberfläche für Orchestrierung, ein
-Review-/Nachweis-Ledger und ein authentifiziertes lokales Web-Dashboard — alles
-über eine einzige eingebettete SQLite-Steuerungsebene.
+Mazzy Command Center ist ein **vollwertiger Agenten-Orchestrator und eine
+Kommandozentrale**, gebaut als projektlokale Pi-Erweiterung. Es verwandelt eine
+Pi-Sitzung in eine dauerhafte, überprüfbare Zentrale, von der aus Agentenarbeit
+geplant, delegiert, ausgeführt, geprüft und erinnert wird: ein Task-Tracker +
+Orchestrator + eine eigene Sub-Agenten-Engine + ein Sub-Agenten-Creator +
+Meta-Agenten + gestufter Speicher + ein Spezifikation↔Code↔Backlog-Wissensgraph —
+alles über einen eingebetteten SQLite-Kern.
 
-> **Status: authentifizierter lokaler Pilot.** Eine Maschine, ein vertrauter
-> Nutzer, projektlokale Persistenz und Prozessgrenzen zwischen Eltern und Kind. Es
-> ist **noch kein** Mehrbenutzer-, Mehrmandanten- oder Remote-Produkt. Siehe
-> [Sicherheit & Grenzen](#sicherheit--grenzen).
+> **Status: authentifizierter lokaler Pilot, auf dem Weg zur vollen
+> Kommandozentrale.** Der Pilot liefert heute den dauerhaften Kern, das Dashboard,
+> die Graph-Ansicht und die attestierte Orchestrierung. Die eigene
+> Sub-Agenten-Engine, der Sub-Agenten-Creator, Meta-Agenten und gestufter Speicher /
+> DAG / RAG / Vektoren sind die Produktrichtung und werden schrittweise
+> ausgeliefert. Siehe [Roadmap](#roadmap) und [Sicherheit & Grenzen](#sicherheit--grenzen).
 
 ---
 
-## Was es tut
+## Was es ist
 
-Mazzy ist eine **Steuerungsebene**, keine zweite Ausführungsumgebung. Es
-protokolliert und steuert Arbeit; die eigentliche Ausführung wird an `pi-subagents`
-delegiert. Die übergeordnete Pi-Sitzung ist der einzige Schreiber der
-Steuerungsebene; Kind-Agenten verändern den Zustand nie direkt — der Elternteil
-attestiert beobachtete Ergebnisse.
+Mazzy ist eine **Kommandozentrale, der die Orchestrierung gehört**: Sie entscheidet,
+*was als Nächstes läuft, mit welchem Agenten, unter welchem Budget und welcher
+Fähigkeitsobergrenze*, und hält den dauerhaften Plan, Nachweise, Speicher und
+Wissensgraph. Sie ist um eine **Drei-Autoritäten-Trennung** herum entworfen, damit
+der Besitz einer mächtigen Engine die Web-Oberfläche nie zu einem
+Remote-Ausführungs-Orakel macht:
 
-- **Dauerhafter Task-Tracker** — Epics / Features / Tasks / Bugs mit einem
-  versionierten Lebenszyklus (`DRAFT → BACKLOG → READY → CLAIMED → RUNNING → REVIEW
-  → DONE`, plus `BLOCKED / FAILED / CANCELLED`). Jede Aktualisierung wird
-  optimistisch auf Nebenläufigkeit geprüft.
-- **Elternattestierte Orchestrierung** — der Elternteil bindet einen *beobachteten*
-  Kindlauf an eine Aufgabe, bevor er sie als laufend deklariert; `DONE` erfordert
-  einen unabhängigen PASS-Nachweis, keinen Kommentar.
+1. **Planung** (der Kern) — ein reiner Planer berechnet aus dauerhaften, typisierten
+   Datensätzen, was als Nächstes laufen soll.
+2. **Dispatch** (Mazzys eigener Executor) — ein separater, **netzwerkloser**
+   Prozess mit Elternlebensdauer ist das Einzige, das Arbeit tatsächlich startet.
+3. **Ausführungs-Provider** — eine austauschbare Laufzeit hinter dem Executor (heute
+   `pi-subagents`; Mazzy besitzt die Provider-Schnittstelle und baut die eigene Engine).
+
+- **Dauerhafter Task-Tracker** — Epics / Features / Tasks / Bugs mit versioniertem
+  Lebenszyklus (`DRAFT → BACKLOG → READY → CLAIMED → RUNNING → REVIEW → DONE`, plus
+  `BLOCKED / FAILED / CANCELLED`), optimistisch auf Nebenläufigkeit geprüft.
+- **Orchestrator mit attestiertem Dispatch** — Mazzy plant und startet Arbeit, bindet
+  den *beobachteten* Lauf an die Aufgabe und macht `DONE` von unabhängigem
+  PASS-Nachweis abhängig.
+- **Eigene Sub-Agenten-Engine & Creator** *(Richtung)* — eine erstpartei
+  Ausführungs-Engine und ein deklarativer Creator: Agenten, Fähigkeitsobergrenzen,
+  Budgets und Prompt-Verträge definieren und über Mazzys Executor starten.
+- **Meta-Agenten** *(Richtung)* — Agenten, deren Ausgabe *Vorschläge* sind, auf die
+  andere Agenten reagieren, unter demselben attestierten Dispatch-Pfad.
+- **Gestufter Speicher + Wissen** *(Richtung)* — Hot/Warm/Cold-Speicher mit hybrider
+  Suche (RAG), Vektoren und Plan-DAG — als Kontext, nie als Autorität.
 - **Authentifiziertes lokales Dashboard** — eine eigenständige Web-Oberfläche auf
-  `localhost` mit Capability-Token, Live-Updates über SSE, einem Kanban-Board und
-  einer Task-Diskussionsleiste.
-- **SDD/ADR-Graph** — eine Browser-Visualisierung, die Spezifikationsklauseln
+  `localhost` mit Capability-Token, Live-Updates über SSE, Kanban-Board und
+  Diskussionsleiste.
+- **SDD/ADR-Wissensgraph** — eine Browser-Visualisierung, die Spezifikationsklauseln
   (ADR/INV/FR), Codekomponenten und Backlog-Elemente zu einem filterbaren Graphen
-  verbindet.
+  verbindet (Speicher & Vektoren als erstklassige Quellen).
 - **Sicheres Scaffolding** — `mazzy-init` schreibt portable Projektvorlagen mit
   Dry-Run als Standard, abgesichertem `--force` und `--rollback`.
 
@@ -49,24 +67,33 @@ attestiert beobachtete Ergebnisse.
 
 ## Architektur im Überblick
 
+Mazzy besitzt die Orchestrierung über eine **Drei-Autoritäten-Trennung**, damit eine
+mächtige Engine die Web-Oberfläche nie zu einem Remote-Ausführungs-Orakel macht:
+
 ```
-Mensch ── Pi-Befehle / authentifizierter localhost-Browser ──┐
-                                                              v
-Pi-Elternteil + Erweiterungs-APIs ── Mazzy Command Center ── SQLite-Steuerungsebene
-                                    │       │        │
-                                    │       ├─ Diskussion / Nachweise / Berichte
-                                    │       └─ attestierte Steuerungsbrücke
-                                    v
-                          pi-subagents (einzige Kind-Laufzeitumgebung)
+Mensch / Planer ── Pi-Befehle / authentifizierter localhost-Browser ──┐
+                                                                       v
+Mazzy Command Center Kern (Orchestrierungshoheit) ── SQLite-Kern
+   • Plan / Nachweise / Speicher & Wissen (Richtung)  │
+   • gibt einmalige, integritätsgeprüfte Dispatch-Autorisierung aus
+                                                       v
+                        Mazzy-Executor  (separater, netzwerkloser Prozess)
+                                                       │
+                                                       v
+                        Ausführungs-Provider — heute pi-subagents,
+                        Mazzys eigene Engine (Richtung) — austauschbar
 ```
 
 **Kernprinzipien (Invarianten):**
 
-- **Einzige Ausführungsumgebung** — `pi-subagents` führt Kinder aus; Mazzy erzeugt,
-  plant, wiederholt oder beendet niemals Kindarbeit. Ihm gehört die
-  *Entscheidungs*hoheit, nicht die *Ausführungs*hoheit.
-- **Nur der Elternteil schreibt** — Änderungen an der Steuerungsebene erfordern den
-  interaktiven Elternteil; geerbte Kindprozesse werden abgewiesen.
+- **Keine HTTP-verursachte Ausführung** — kein Prozess, der einen HTTP-Socket
+  beendet, besitzt Dispatch-Hoheit; nur der separate Executor startet Arbeit, und
+  nur gegen eine einmalige Autorisierung.
+- **Kein Freitext steuert die Ausführung** — Planung ist eine reine Funktion
+  typisierter, dauerhafter Datensätze; Speicher, Vektoren und Cache sind *Kontext,
+  nie Autorität*.
+- **Nur der Elternteil schreibt** — Kernänderungen erfordern den interaktiven
+  Elternteil; geerbte Kindprozesse werden abgewiesen.
 - **Kein Host-Pfad überquert die API** — nur opake IDs, Enums und relative
   Referenzen verlassen localhost.
 - **Kommentare sind niemals Nachweise** — der maßgebliche PASS/FAIL-Kanal sind
@@ -149,8 +176,16 @@ Bitte melde Sicherheitsbedenken über einen privaten Kanal, nicht über ein
 
 ## Lizenz
 
-**Proprietär, quelloffen einsehbar.** Copyright © 2026 Mazurov N.N. Alle Rechte
-vorbehalten. Du darfst die Software ansehen, ausführen und evaluieren, aber du
-darfst sie **nicht** ohne vorherige schriftliche Genehmigung des Autors ändern,
-weiterverbreiten oder abgeleitete Werke erstellen, und jede erlaubte Kopie muss die
-Autorennennung beibehalten. Vollständige Bedingungen in der Datei [LICENSE](LICENSE).
+**Quelloffen einsehbar unter der [PolyForm Noncommercial License 1.0.0](LICENSE).**
+Copyright (c) 2026 Mazurov N.N.
+
+- ✅ **Frei** zu nutzen, studieren, ändern und teilen für jeden **nichtkommerziellen**
+  Zweck — private Nutzung, Forschung und Wissenschaft, Bildung.
+- ⛔ **Keine kommerzielle Nutzung.** Unternehmen und kommerzielle Produkte/Dienste
+  brauchen eine separate kommerzielle Lizenz. Eine **Mazzy Command Center
+  Enterprise**-Edition wird kommerziell angeboten.
+- ⛔ Alle Autoren-/Copyright-/Lizenzhinweise müssen erhalten bleiben; die Software
+  darf ohne schriftliche Genehmigung nicht umbenannt, die Attribution nicht entfernt
+  und geänderte Versionen nicht unter demselben Namen präsentiert werden.
+
+Für eine kommerzielle Lizenz oder Nutzung darüber hinaus: https://github.com/mazurovn
