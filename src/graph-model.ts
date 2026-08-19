@@ -1,3 +1,8 @@
+// Mazzy Command Center
+// Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn)
+// Proprietary source-available license — no modification or redistribution
+// without prior written permission. See LICENSE.
+
 /**
  * graph-model.ts — the unified spec<->component<->backlog graph model.
  *

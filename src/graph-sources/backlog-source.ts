@@ -1,3 +1,8 @@
+// Mazzy Command Center
+// Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn)
+// Proprietary source-available license — no modification or redistribution
+// without prior written permission. See LICENSE.
+
 import { canonicalizeClause, domainOf, type GraphDelta, type GraphEdge, type GraphNode, type GraphSource, type NodeKind, type SourceBudget } from "../graph-model.ts";
 import { specRefsIn } from "../reverse-graph.ts";
 import type { ControlPlanePort, TaskType } from "../types.ts";

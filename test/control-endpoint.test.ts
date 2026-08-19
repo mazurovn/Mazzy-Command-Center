@@ -1,3 +1,8 @@
+// Mazzy Command Center
+// Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn)
+// Proprietary source-available license — no modification or redistribution
+// without prior written permission. See LICENSE.
+
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync } from "node:fs";

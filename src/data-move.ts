@@ -1,3 +1,8 @@
+// Mazzy Command Center
+// Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn)
+// Proprietary source-available license — no modification or redistribution
+// without prior written permission. See LICENSE.
+
 import { createHash, randomBytes } from "node:crypto";
 import { closeSync, constants, existsSync, mkdirSync, openSync, readFileSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, relative } from "node:path";

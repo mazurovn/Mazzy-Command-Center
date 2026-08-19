@@ -2,6 +2,9 @@
 
 **A parent-attested, localhost task command center for the [Pi](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) coding agent.**
 
+_By **Mazurov N.N.** — https://github.com/mazurovn · Proprietary, source-available
+(no modification or redistribution without written permission — see [LICENSE](LICENSE))._
+
 Mazzy Command Center is a project-local Pi extension that turns a Pi session into
 a durable, auditable command center for agent-driven work: a task tracker, an
 orchestration decision surface, a review/evidence ledger, and an authenticated
@@ -172,6 +175,15 @@ See [`docs/`](docs/) for the conceptual architecture and specification summary.
 
 ---
 
+## Author
+
+**Mazurov N.N.** — https://github.com/mazurovn
+
 ## License
 
-Released under the [GNU AGPL-3.0-or-later](LICENSE).
+**Proprietary, source-available.** Copyright (c) 2026 Mazurov N.N. All rights
+reserved. You may view, run, and evaluate the Software, but you may **not** modify,
+adapt, redistribute, or create derivative works without the Author's prior written
+permission, and every permitted copy must retain the author attribution. See the
+[LICENSE](LICENSE) file for the full terms. For any use beyond evaluation — including
+modification or redistribution — contact the Author at https://github.com/mazurovn.

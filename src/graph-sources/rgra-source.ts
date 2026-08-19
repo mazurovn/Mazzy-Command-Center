@@ -1,3 +1,8 @@
+// Mazzy Command Center
+// Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn)
+// Proprietary source-available license — no modification or redistribution
+// without prior written permission. See LICENSE.
+
 import { existsSync, readFileSync } from "node:fs";
 import { canonicalizeClause, domainOf, isConstraintKind, type GraphDelta, type GraphEdge, type GraphNode, type GraphSource, type NodeKind, type SourceBudget } from "../graph-model.ts";
 

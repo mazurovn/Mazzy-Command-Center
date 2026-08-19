@@ -47,7 +47,7 @@
   "engines": {
     "node": ">=22.19.0"
   },
-  "license": "AGPL-3.0-or-later",
+  "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
     "url": "https://github.com/mazurovn/Mazzy-Command-Center.git"
@@ -55,5 +55,6 @@
   "homepage": "https://github.com/mazurovn/Mazzy-Command-Center#readme",
   "bugs": {
     "url": "https://github.com/mazurovn/Mazzy-Command-Center/issues"
-  }
+  },
+  "author": "Mazurov N.N. (https://github.com/mazurovn)"
 }

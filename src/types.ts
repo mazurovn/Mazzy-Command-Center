@@ -1,3 +1,8 @@
+// Mazzy Command Center
+// Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn)
+// Proprietary source-available license — no modification or redistribution
+// without prior written permission. See LICENSE.
+
 export const TASK_STATES = ["DRAFT", "BACKLOG", "READY", "CLAIMED", "RUNNING", "REVIEW", "BLOCKED", "DONE", "FAILED", "CANCELLED"] as const;
 export type TaskState = (typeof TASK_STATES)[number];
 export type TaskRisk = "low" | "medium" | "high" | "critical";

@@ -1,3 +1,8 @@
+// Mazzy Command Center
+// Copyright (c) 2026 Mazurov N.N. (https://github.com/mazurovn)
+// Proprietary source-available license — no modification or redistribution
+// without prior written permission. See LICENSE.
+
 import { createHash, randomBytes } from "node:crypto";
 import { closeSync, constants, copyFileSync, existsSync, fsyncSync, lstatSync, mkdirSync, openSync, readFileSync, readdirSync, realpathSync, renameSync, rmSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
@@ -639,4 +644,3 @@ export function rollbackControlMigration(cwd: string, options: { source?: string
   if (!lock.ok) return { schemaVersion: 1, applied: false, journal: readJournalState(paths.journal), restored: false, detail: "Refusing rollback: another cutover operation is in progress (lock busy)." };
   try { return rollbackControlMigrationUnlocked(cwd, options); } finally { lock.release(); }
 }
-

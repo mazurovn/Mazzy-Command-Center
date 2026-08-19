@@ -1,5 +1,7 @@
 # Mazzy Command Center — Conceptual Architecture
 
+_By Mazurov N.N. — https://github.com/mazurovn · Proprietary, source-available._
+
 This document is a **conceptual overview** of Mazzy Command Center: what it owns,
 what it deliberately does not own, and the invariants that keep it safe. It is not
 an implementation reference.
