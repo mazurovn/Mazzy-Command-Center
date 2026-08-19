@@ -1,5 +1,7 @@
 # Mazzy Command Center
 
+**English** · [Русский](README.ru.md) · [Deutsch](README.de.md) · [中文](README.zh.md) · [日本語](README.ja.md) · [한국어](README.ko.md)
+
 **A parent-attested, localhost task command center for the [Pi](https://www.npmjs.com/package/@earendil-works/pi-coding-agent) coding agent.**
 
 _By **Mazurov N.N.** — https://github.com/mazurovn · Proprietary, source-available
@@ -86,6 +88,19 @@ A deeper conceptual overview lives in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE
 **Slash commands:** `/mazzy` (status + dashboard URL), `/mazzy-url` (access URL with
 token), `/mazzy-server` (start/stop/status), `/mazzy-menu` (`Ctrl+Alt+M`),
 `/mazzy-init`, `/mazzy-doctor`, `/mazzy-registry`, `/mazzy-clean`.
+
+---
+
+## Screenshots
+
+**SDD/ADR connectivity graph** — specification (ADR/INV/FR), code, and backlog in one
+filterable graph:
+
+![SDD/ADR graph](docs/screenshot.png)
+
+**Backlog board** — a Kanban board with a revisioned lifecycle:
+
+![Backlog board](docs/screenshot-backlog.png)
 
 ---
 

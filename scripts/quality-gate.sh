@@ -41,7 +41,7 @@ if scan_files | xargs grep -nE '@(gmail|yandex|mail\.ru|outlook|proton)\.' 2>/de
 else ok "no personal emails"; fi
 # A bare 'mazurov' that is NOT a sanctioned occurrence is suspicious. Sanctioned:
 # the GitHub URL, the author name, and the npm scope '@mazurovn/'.
-SANCTIONED='github\.com/mazurovn|Mazurov N\.N\.|@mazurovn/'
+SANCTIONED='github(usercontent)?\.com/mazurovn|githubusercontent\.com/mazurovn|Mazurov N\.N\.|@mazurovn/'
 if scan_files | xargs grep -nE 'mazurov' 2>/dev/null | grep -viE "$SANCTIONED" | grep -q .; then
   red "unexpected 'mazurov' occurrence (not a sanctioned attribution):"; scan_files | xargs grep -nE 'mazurov' 2>/dev/null | grep -viE "$SANCTIONED" | sed 's/^/        /'
 else ok "only sanctioned author/scope (Mazurov N.N. / github.com/mazurovn / @mazurovn)"; fi
@@ -59,7 +59,7 @@ if scan_files | grep -vE '\.(md)$' | xargs grep -lnEi "$INTERNAL" 2>/dev/null | 
 else ok "no internal process notes in code"; fi
 
 echo "== 5. Only allowed top-level entries =="
-ALLOWED='^(src|static|skills|resources|test|docs|scripts|README\.md|LICENSE|package\.json|package-lock\.json|tsconfig\.json|\.npmignore|\.gitignore|\.gitattributes)(/|$)'
+ALLOWED='^(src|static|skills|resources|test|docs|scripts|README\.md|README\.[a-z][a-z]\.md|LICENSE|package\.json|package-lock\.json|tsconfig\.json|\.npmignore|\.gitignore|\.gitattributes)(/|$)'
 BAD=$(scan_files | grep -oE '^[^/]+(/|$)' | sort -u | grep -vE "$ALLOWED" || true)
 if [ -n "$BAD" ]; then red "unexpected top-level entries:"; printf '%s\n' "$BAD" | sed 's/^/        /'; else ok "only allowed top-level entries"; fi
 
