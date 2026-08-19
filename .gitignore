@@ -1,0 +1,14 @@
+# Runtime / work artifacts — never publish
+.mazzy/
+.pi/
+.pi-ops/
+node_modules/
+*.db
+*.db-*
+*.jsonl
+*.log
+.env
+.env.*
+*.tsbuildinfo
+coverage/
+dist/

@@ -1,0 +1,38 @@
+{
+  "schema": "mazzy.storage-policy",
+  "version": 1,
+  "directories": [
+    "work/tmp",
+    "work/prompts",
+    "work/results",
+    "work/sessions",
+    "work/outputs",
+    "work/worktrees",
+    "work/missions",
+    "memory/hot",
+    "memory/warm",
+    "memory/cold",
+    "indexes/vector",
+    "dag",
+    "manifests"
+  ],
+  "quotas": {
+    "work/tmp": { "maxBytes": 67108864 },
+    "work/prompts": { "maxBytes": 67108864 },
+    "work/results": { "maxBytes": 134217728 },
+    "work/sessions": { "maxBytes": 268435456 },
+    "work/outputs": { "maxBytes": 134217728 },
+    "work/worktrees": { "maxBytes": 1073741824 },
+    "work/missions": { "maxBytes": 134217728 },
+    "memory/hot": { "maxBytes": 67108864 },
+    "memory/warm": { "maxBytes": 134217728 },
+    "memory/cold": { "maxBytes": 268435456 },
+    "indexes/vector": { "maxBytes": 536870912 },
+    "dag": { "maxBytes": 67108864 },
+    "manifests": { "maxBytes": 67108864 }
+  },
+  "retention": {
+    "tmp": { "maxAgeSeconds": 86400 }
+  },
+  "scan": { "maxFiles": 100000, "maxBytes": 1073741824 }
+}

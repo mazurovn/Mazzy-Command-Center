@@ -1,0 +1,22 @@
+# Keep policy/docs; identity is checkout-local and must never enter Git history.
+project.json
+.project.*.tmp
+work/**
+!work/.gitkeep
+memory/hot/**
+memory/warm/**
+memory/cold/**
+indexes/vector/**
+dag/**
+manifests/**
+*.db
+*.db-*
+# Control-plane store, its backups and migration journal must never enter Git history
+# (a committed promoted journal without the DB, or a full backup copy, is a data hazard).
+control/**
+# External cutover seals are checkout-local; never inherit one through Git.
+cutover-witness.json
+cutover-witness.json.tmp-*
+*.db.backup
+*.jsonl
+*.log

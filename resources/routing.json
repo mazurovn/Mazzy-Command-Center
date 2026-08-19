@@ -1,0 +1,22 @@
+{
+  "version": "1",
+  "promptContractVersion": "mazzy-routing-prompt-v1",
+  "toolContractVersion": "mazzy-route-v1",
+  "budgets": { "defaultUsd": 0.25, "highRiskUsd": 2, "maxChildrenPerWave": 2 },
+  "agents": {
+    "scout": { "model": "auto", "skill": "mazzy-bounded-recon" },
+    "reviewer": { "model": "auto" },
+    "implementer": { "model": "auto" },
+    "planner": { "model": "auto", "topGate": true },
+    "researcher": { "model": "auto" }
+  },
+  "lanes": {
+    "bounded-recon": { "agent": "scout", "maxRisk": "medium", "cacheable": true },
+    "review": { "agent": "reviewer", "maxRisk": "high", "cacheable": false },
+    "implementation": { "agent": "implementer", "maxRisk": "critical", "cacheable": false },
+    "architecture": { "agent": "planner", "maxRisk": "critical", "cacheable": false, "requiresGateReason": true },
+    "package-research": { "agent": "researcher", "maxRisk": "medium", "cacheable": false }
+  },
+  "escalationTargets": { "bounded-recon": "reviewer", "review": "planner", "implementation": "planner", "architecture": "planner", "package-research": "planner" },
+  "cache": { "keyVersion": "l4-v1", "deterministicOperations": ["symbol-lookup", "file-summary", "policy-read"] }
+}

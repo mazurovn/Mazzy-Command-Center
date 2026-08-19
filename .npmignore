@@ -1,0 +1,11 @@
+# `files` in package.json is the package allowlist. Keep runtime/work artifacts out
+# even if the allowlist is widened later.
+.mazzy/
+.pi/
+.pi-ops/
+test/
+node_modules/
+*.db
+*.db-*
+*.jsonl
+*.log
