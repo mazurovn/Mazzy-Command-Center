@@ -103,16 +103,26 @@ Pi configuration.
 | `@earendil-works/pi-ai` | `0.84.2` (exact peer) |
 | `@earendil-works/pi-tui` | `0.84.2` (exact peer) |
 
-**Install from a local checkout** (the supported form today):
+**Install from npm** (recommended):
+
+```bash
+pi install npm:@mazurovn/mazzy-command-center
+# then restart Pi so it discovers the extension.
+```
+
+**Install from GitHub:**
+
+```bash
+pi install git:github.com/mazurovn/Mazzy-Command-Center
+```
+
+**Install from a local checkout** (for development):
 
 ```bash
 git clone https://github.com/mazurovn/Mazzy-Command-Center.git
 cd Mazzy-Command-Center
 npm install
-
-# From your Pi project, install this checkout as a project-local package:
-pi install -l /path/to/Mazzy-Command-Center
-# then restart Pi so it discovers the extension.
+pi install -l /path/to/Mazzy-Command-Center   # from your Pi project
 ```
 
 **Verify**

@@ -1,5 +1,5 @@
 {
-  "name": "mazzy-command-center",
+  "name": "@mazurovn/mazzy-command-center",
   "version": "0.2.0",
   "description": "Mazzy Command Center — a parent-attested, localhost task command center for the Pi coding agent",
   "type": "module",

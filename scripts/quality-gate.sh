@@ -39,10 +39,12 @@ else ok "no personal host paths"; fi
 if scan_files | xargs grep -nE '@(gmail|yandex|mail\.ru|outlook|proton)\.' 2>/dev/null | grep -q .; then
   red "personal email found:"; scan_files | xargs grep -nE '@(gmail|yandex|mail\.ru|outlook|proton)\.' 2>/dev/null | sed 's/^/        /'
 else ok "no personal emails"; fi
-# A bare 'mazurov' that is NOT the sanctioned attribution is suspicious.
-if scan_files | xargs grep -nE 'mazurov' 2>/dev/null | grep -viE 'github\.com/mazurovn|Mazurov N\.N\.' | grep -q .; then
-  red "unexpected 'mazurov' occurrence (not the sanctioned attribution):"; scan_files | xargs grep -nE 'mazurov' 2>/dev/null | grep -viE 'github\.com/mazurovn|Mazurov N\.N\.' | sed 's/^/        /'
-else ok "only sanctioned author attribution (Mazurov N.N. / github.com/mazurovn)"; fi
+# A bare 'mazurov' that is NOT a sanctioned occurrence is suspicious. Sanctioned:
+# the GitHub URL, the author name, and the npm scope '@mazurovn/'.
+SANCTIONED='github\.com/mazurovn|Mazurov N\.N\.|@mazurovn/'
+if scan_files | xargs grep -nE 'mazurov' 2>/dev/null | grep -viE "$SANCTIONED" | grep -q .; then
+  red "unexpected 'mazurov' occurrence (not a sanctioned attribution):"; scan_files | xargs grep -nE 'mazurov' 2>/dev/null | grep -viE "$SANCTIONED" | sed 's/^/        /'
+else ok "only sanctioned author/scope (Mazurov N.N. / github.com/mazurovn / @mazurovn)"; fi
 
 echo "== 3. Secrets / credentials =="
 SECRET='(ghp_[A-Za-z0-9]{20,}|xox[bpas]-[A-Za-z0-9-]{10,}|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN[A-Z ]+PRIVATE KEY-----|(api[_-]?key|secret|password|passwd)\s*[:=]\s*["'"'"'][A-Za-z0-9_+/=-]{12,}["'"'"'])'
